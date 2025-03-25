@@ -1,7 +1,9 @@
-import { TodoListInteractor } from "./TodoList.interactor"
-import { useTodoStore } from "./TodoList.store"
+import { TodoStore } from "./TodoList.store"
 
-export type TodoListProps = {
-    interactor: TodoListInteractor
-    store: typeof useTodoStore
+export class TodoListProps {
+    store: TodoStore
+    
+    constructor(store: TodoStore) {
+        this.store = store
+    }
 }

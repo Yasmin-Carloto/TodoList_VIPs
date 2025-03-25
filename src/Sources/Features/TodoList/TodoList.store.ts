@@ -7,11 +7,12 @@ export type TodoStore = {
     newTodo: string
     setNewTodo: (text: string) => void
     addTodo: () => void
+    changingDoneStatus: (todo: Todo) => void
 }
 
 export const useTodoStore = create<TodoStore>((set) => ({
     todos: [],
-    newTodo: "",
+    newTodo: "rytr",
     setNewTodo(text: string) {
         set((state) => ({
             ...state,
@@ -21,8 +22,18 @@ export const useTodoStore = create<TodoStore>((set) => ({
     addTodo() {
         set((state) => ({
             ...state,
-            todos: new TodoService().addTodo(state.todos, state.newTodo),
+            todos: TodoService.shared.addTodo(state.todos, state.newTodo),
             newTodo: "",
         }))
     },
+    changingDoneStatus(todo: Todo) {
+        set((state) => ({
+            ...state,
+            todos: TodoService.shared.changingDoneStatus(state.todos, todo)
+        }))
+    }
 }))
+
+export const useHookDoDaniel = (estadoInicial: string) => {
+    return estadoInicial.toUpperCase()
+}
