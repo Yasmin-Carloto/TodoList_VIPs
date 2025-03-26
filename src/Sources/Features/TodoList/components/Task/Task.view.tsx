@@ -1,15 +1,16 @@
 import { FaTrash } from "react-icons/fa";
 import { Task, Checkbox, RemoveButton, TaskInformation, TaskText } from "./Task.style";
+import { TaskType } from "./Task.types";
 
-export function TaskView() {
+export function TaskView({ onCheckboxClicked, taskText, onDeleteClicked, onChangeTask }: TaskType) {
     return(
         <Task>
             <TaskInformation>
-                <Checkbox type="checkbox" />
-                <TaskText value="task 3" type="text" />
+                <Checkbox type="checkbox" onChange={onCheckboxClicked} />
+                <TaskText type="text" value={taskText} onChange={(e) => {onChangeTask(e)}} />
             </TaskInformation>
         
-            <RemoveButton>
+            <RemoveButton onClick={onDeleteClicked}>
                 <FaTrash color="#ff0000" size={18}/>
             </RemoveButton>
         </Task>

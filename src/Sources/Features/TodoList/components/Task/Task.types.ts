@@ -1,6 +1,8 @@
+import { ChangeEvent } from "react"
+
 export type TaskType = {
     onCheckboxClicked: () => void
-    taskText: () => void
+    taskText: string
     onDeleteClicked: () => void
-    onChangeTask: () => void
+    onChangeTask: (e: ChangeEvent<HTMLInputElement>) => void
 }

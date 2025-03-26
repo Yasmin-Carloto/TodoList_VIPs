@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.section`
     margin: 2em;
-
 `
 
 export const ActionsContainer = styled.div`

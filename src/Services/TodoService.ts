@@ -5,18 +5,21 @@ export class TodoService {
 
     addTodo(todoList: Todo[], newTodoText: string) {
         let todo: Todo
-
-        if(todoList.length <= 0) todo = new Todo(1, newTodoText, false) 
-        else todo = new Todo(todoList[todoList.length].id + 1, newTodoText, false)
+        if (todoList.length <= 0) {
+            todo = new Todo(1, newTodoText, false)
+        } else {
+            todo = new Todo(todoList[todoList.length - 1].id + 1, newTodoText, false)
+        }
         
-        todoList.push(todo)
-
-        return todoList
+        return [...todoList, todo]
     }
+    
 
-    deleteTodo(todoList: Todo[], todo: Todo){
+    deleteTodo(todoList: Todo[], todo: Todo): Todo[]{
         const arrIndex = todoList.indexOf(todo)
         todoList.splice(arrIndex, 1)
+
+        return todoList
     }
 
     changingDoneStatus(todoList: Todo[], todo: Todo): Todo[]{
@@ -30,5 +33,13 @@ export class TodoService {
         })
 
         return updatedTodoList
+    }
+
+    changingTask(todoList: Todo[], todoText: string, todoID: number) {
+        return todoList.map((todoItem) => 
+            todoItem.id === todoID 
+                ? { ...todoItem, todoText } 
+                : todoItem
+        )
     }
 }
