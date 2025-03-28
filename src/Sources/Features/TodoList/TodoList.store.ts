@@ -13,7 +13,7 @@ export type TodoStore = {
 }
 
 export const useTodoStore = create<TodoStore>((set) => ({
-    todos: [],
+    todos: JSON.parse(localStorage.getItem("todos") || "[]"),
     newTodo: "",
     setNewTodo(text: string) {
         set((state) => ({
@@ -22,28 +22,45 @@ export const useTodoStore = create<TodoStore>((set) => ({
         }))
     },
     addTodo() {
-        set((state) => ({
-            ...state,
-            todos: TodoService.shared.addTodo(state.todos, state.newTodo),
-            newTodo: "",
-        }))
+        set((state) => {
+            const updatedTodos = TodoService.shared.addTodo(state.todos, state.newTodo)
+            localStorage.setItem("todos", JSON.stringify(updatedTodos))
+            return {
+                ...state,
+                todos: updatedTodos,
+                newTodo: "",
+            }
+        })
     },
     deleteTodo(todo: Todo) {
-        set((state) => ({
-            ...state,
-            todos: TodoService.shared.deleteTodo(state.todos, todo)
-        }))
+        set((state) => {
+            const updatedTodos = TodoService.shared.deleteTodo(state.todos, todo)
+            localStorage.setItem("todos", JSON.stringify(updatedTodos))
+            return {
+                ...state,
+                todos: updatedTodos
+            }
+        })
     },
     changingDoneStatus(todo: Todo) {
-        set((state) => ({
-            ...state,
-            todos: TodoService.shared.changingDoneStatus(state.todos, todo)
-        }))
+        set((state) => {
+            const updatedTodos = TodoService.shared.changingDoneStatus(state.todos, todo)
+            localStorage.setItem("todos", JSON.stringify(updatedTodos))
+            return {
+                ...state,
+                todos: updatedTodos
+            }
+        })
     },
     onChangeTask(todoText: string, todoID: number) {
-        set((state) => ({
-            ...state,
-            todos: TodoService.shared.changingTask(state.todos, todoText, todoID)
-        }))
+        set((state) => {
+            const updatedTodos = TodoService.shared.changingTask(state.todos, todoText, todoID)
+            localStorage.setItem("todos", JSON.stringify(updatedTodos))
+            return {
+                ...state,
+                todos: updatedTodos
+            }
+        })
     }
 }))
+
